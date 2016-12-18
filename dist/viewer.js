@@ -676,6 +676,11 @@
       var _this = this;
       var options = _this.options;
       var element = _this.element;
+      var isImg = element.tagName.toLowerCase() === 'img';
+      var images = getByTag(element, 'img');
+      var length = images.length;
+      var prevControl;
+      var nextControl;
       var template;
       var parent;
       var viewer;
@@ -698,6 +703,8 @@
       _this.footer = getByClass(viewer, 'viewer-footer')[0];
       _this.title = title = getByClass(viewer, 'viewer-title')[0];
       _this.toolbar = toolbar = getByClass(viewer, 'viewer-toolbar')[0];
+      _this.prevControl = prevControl = getByClass(viewer, 'viewer-prev')[0];
+      _this.nextControl = nextControl = getByClass(viewer, 'viewer-next')[0];
       _this.navbar = navbar = getByClass(viewer, 'viewer-navbar')[0];
       _this.button = button = getByClass(viewer, 'viewer-button')[0];
       _this.tooltipBox = getByClass(viewer, 'viewer-tooltip')[0];
@@ -712,6 +719,13 @@
       toggleClass(toolbar.querySelector('.viewer-one-to-one'), CLASS_INVISIBLE, !options.zoomable);
       toggleClass(toolbar.querySelectorAll('li[class*="zoom"]'), CLASS_INVISIBLE, !options.zoomable);
       toggleClass(toolbar.querySelectorAll('li[class*="flip"]'), CLASS_INVISIBLE, !options.scalable);
+
+      if(length == 1){
+        addClass(prevControl, CLASS_HIDE);
+        addClass(nextControl, CLASS_HIDE);
+      }
+
+      console.log("tamaño. " + length);
 
       if (!options.rotatable) {
         rotate = toolbar.querySelectorAll('li[class*="rotate"]');
