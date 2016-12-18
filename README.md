@@ -2,7 +2,7 @@
 
 > JavaScript image viewer.
 
-- [Website](https://fengyuanchen.github.io/viewerjs)
+- [Website](https://ivanfr90.github.io/viewerjs)
 
 [![Build Status Images](https://travis-ci.org/fengyuanchen/viewerjs.svg)](https://travis-ci.org/fengyuanchen/viewerjs)
 
@@ -14,7 +14,7 @@
 - [Main](#main)
 - [Getting started](#getting-started)
 - [Keyboard support](#keyboard-support)
-- [Options](#options)
+- [Options] (#options) +1 new option added!
 - [Methods](#methods)
 - [Events](#events)
 - [No conflict](#no-conflict)
@@ -27,7 +27,7 @@
 
 ## Features
 
-- Supports 29 [options](#options)
+- Supports 30 [options](#options)
 - Supports 23 [methods](#methods)
 - Supports 7 [events](#events)
 - Supports modal and inline modes
@@ -59,8 +59,8 @@ dist/
 
 Three quick start options are available:
 
-- [Download the latest release](https://github.com/fengyuanchen/viewerjs/archive/master.zip).
-- Clone the repository: `git clone https://github.com/fengyuanchen/viewerjs.git`.
+- [Download the latest release](https://github.com/ivanfr90/viewerjs/archive/master.zip).
+- Clone the repository: `git clone https://github.com/ivanfr90/viewerjs.git`.
 - Install with [NPM](https://npmjs.com): `npm install viewerjs`.
 
 
@@ -148,6 +148,14 @@ Enable inline mode.
 - Default: `true`
 
 Show the button on the top-right of the viewer.
+
+
+### closable
+
+- Type: `Boolean`
+- Default: `true`
+
+Enable to close viewer when click out of image area.
 
 
 ### navbar

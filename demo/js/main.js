@@ -10,6 +10,7 @@ window.onload = function () {
   var options = {
         // inline: true,
         url: 'data-original',
+        //zoomRatio: 0.3,
         ready:  function (e) {
           console.log(e.type);
         },
@@ -84,6 +85,13 @@ window.onload = function () {
   addEventListener(pictures, 'viewed', function (e) {
     console.log(e.type, e.detail.index);
   });
+  addEventListener(pictures, 'rotated left', function (e) {
+    console.log(e.type, e.detail.index);
+  });
+  addEventListener(pictures, 'rotated right', function (e) {
+    console.log(e.type, e.detail.index);
+  });
+
   viewer = new Viewer(pictures, options);
 
   toggleButtons(options.inline ? 'inline' : 'modal');

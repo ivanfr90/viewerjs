@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.5.1 (December 18, 2016)
+- Added new option: closable, to close automatically viewer when click out
+of the image
+- Minor improvement: hide prev and next buttons of toolbar when use viewer with only one image.
+
 
 ## 0.5.0 (July 22, 2016)
 

@@ -47,6 +47,7 @@
   var CLASS_FULLSCREEN = NAMESPACE + '-fullscreen';
   var CLASS_FULLSCREEN_EXIT = NAMESPACE + '-fullscreen-exit';
   var CLASS_CLOSE = NAMESPACE + '-close';
+  var CLASS_CANVAS = NAMESPACE + '-canvas';
 
   // Events
   var EVENT_MOUSEDOWN = 'mousedown touchstart pointerdown MSPointerDown';
@@ -65,6 +66,8 @@
   var EVENT_HIDDEN = 'hidden';
   var EVENT_VIEW = 'view';
   var EVENT_VIEWED = 'viewed';
+  var EVENT_ROTATED_RIGHT = "rotated right";
+  var EVENT_ROTATED_LEFT = "rotated left";
 
   // RegExps
   var REGEXP_SUFFIX = /^(width|height|left|top|marginLeft|marginTop)$/;
@@ -725,8 +728,6 @@
         addClass(nextControl, CLASS_HIDE);
       }
 
-      console.log("tamaño. " + length);
-
       if (!options.rotatable) {
         rotate = toolbar.querySelectorAll('li[class*="rotate"]');
         addClass(rotate, CLASS_INVISIBLE);
@@ -1347,10 +1348,18 @@
       var _this = this;
       var options = _this.options;
       var e = getEvent(event);
-      var action = options.movable ? 'move' : false;
+      var source = e.srcElement;
       var touches = e.touches;
       var touchesLength;
       var touch;
+      var action;
+
+      if(hasClass(source, CLASS_TRANSITION) ){
+        action = options.movable ? 'move' : false;
+      }
+      else if(hasClass(source, CLASS_CANVAS) ){
+        action = options.closable ? 'close' : false;
+      }
 
       if (!_this.isViewed) {
         return;
@@ -1439,6 +1448,9 @@
 
         if (action === 'move' && _this.options.transition) {
           addClass(_this.image, CLASS_TRANSITION);
+        }
+        else if (action === 'close') {
+          _this.hide();
         }
 
         _this.action = false;
@@ -1804,13 +1816,27 @@
      */
     rotateTo: function (degree) {
       var _this = this;
+      var element = _this.element;
+      var title = _this.title;
       var imageData = _this.imageData;
+      var imageData = _this.imageData;
+      var width = imageData.naturalWidth;
+      var height = imageData.naturalHeight;
+      var image = _this.image;
+      var alt = image.getAttribute('alt');
 
       degree = Number(degree);
 
       if (isNumber(degree) && _this.isViewed && !_this.isPlayed && _this.options.rotatable) {
         imageData.rotate = degree;
         _this.renderImage();
+
+        if(degree === -90){
+          addListener(element, EVENT_ROTATED_LEFT, proxy(_this.rotated, _this), true);
+        }
+        else if( degree === 90){
+           addListener(element, EVENT_ROTATED_RIGHT, proxy(_this.rotated, _this), true);
+        }
       }
 
       return _this;
@@ -2427,6 +2453,9 @@
     // Define the CSS `z-index` value of viewer in inline mode.
     zIndexInline: 0,
 
+    // Enable to close viewer when click out of image
+    closable: true,
+
     // Define where to get the original image URL for viewing
     // Type: String (an image attribute) or Function (should return an image URL)
     url: 'src',
@@ -2439,7 +2468,8 @@
     hide: null,
     hidden: null,
     view: null,
-    viewed: null
+    viewed: null,
+    rotated: null
   };
 
   Viewer.TEMPLATE = (
